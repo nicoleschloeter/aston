@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import {
   Box,
   Button,
@@ -8,15 +8,15 @@ import {
   Radio,
 } from '@mui/material';
 import { useNavigate, useParams } from 'react-router-dom';
-import { useGameStore } from '../store/game';
+import { useGameStore, DEFAULT_ANSWER } from '../store/game';
 
 const Team = () => {
   const navigate = useNavigate();
   const params = useParams();
   const { team, questionId } = params;
   const id = parseInt(questionId, 10);
-  const [currentIndex, setAnswer, getQuestions] = useGameStore((state) => [
-    state.currentIndex,
+  const [updateHeader, setAnswer, getQuestions] = useGameStore((state) => [
+    state.updateHeader,
     state.setAnswer,
     state.getQuestions,
   ]);
@@ -24,27 +24,52 @@ const Team = () => {
   const game = getQuestions(team, questionId);
   const { title, options, correct, answer } = game;
   const nextPage = id + 1;
-  console.log('team', team, '==', game, currentIndex);
+  const isBlueTeam = team === 'blue';
+  const color = isBlueTeam ? 'primary' : 'secondary';
+  console.log('team', answer);
+
+  useEffect(() => {
+    updateHeader();
+  }, []);
 
   return (
     <Box
       sx={{
-        borderTop: '1px solid white',
-        marginTop: '20px',
-        paddingTop: '20px',
+        marginTop: 5,
         alignContent: 'center',
         textAlign: 'center',
       }}
     >
-      <Button variant="contained" onClick={() => navigate('/')}>
-        home
-      </Button>
-      <Typography variant="h2">{team} team</Typography>
-      <Typography>
+      <Typography
+        px={8}
+        mb={2}
+        sx={{
+          display: 'inline-block',
+          textTransform: 'uppercase',
+          border: '1px dashed',
+          borderColor: color,
+        }}
+        variant="h6"
+        color={color}
+      >
+        {team} team
+      </Typography>
+      <Typography variant="h3" py={2} mb={2}>
         {title} {nextPage}
       </Typography>
       <RadioGroup
-        sx={{ maxWidth: 400, margin: '0 auto' }}
+        sx={{
+          margin: '0 auto',
+          display: 'grid',
+          padding: 2,
+          gridTemplateColumns: `repeat(${options.length}, min-content)`,
+          gap: '20px',
+          justifyContent: 'center',
+          img: {
+            maxWidth: 120,
+            height: 'auto',
+          },
+        }}
         value={answer}
         onChange={(event, value) => {
           console.log(event, value);
@@ -54,22 +79,44 @@ const Team = () => {
         {options.map((item, index) => (
           <FormControlLabel
             key={`option-${index}`}
-            value={item}
+            value={item.name}
             control={<Radio />}
-            label={item}
+            label={
+              <Box>
+                {item.src && <img src={item.src} alt="pic" />}
+                <Typography
+                  variant="h6"
+                  color={isBlueTeam ? 'primary.main' : 'secondary.main'}
+                >
+                  {item.name}
+                </Typography>
+              </Box>
+            }
+            sx={{
+              svg: { color: isBlueTeam ? 'primary.main' : 'secondary.main' },
+              padding: '20px 60px 20px 30px',
+              background: 'white',
+              maxWidth: 200,
+              minHeight: 120,
+            }}
           />
         ))}
       </RadioGroup>
       <Button
         variant="contained"
+        disabled={answer === DEFAULT_ANSWER}
+        sx={{ marginTop: 10, minWidth: 200, fontSize: 20 }}
+        color={color}
         onClick={() => navigate(`/${team}/${nextPage}`)}
       >
         Next
       </Button>
 
-      <Typography>
-        correct answer is {correct} (vs {answer})
-      </Typography>
+      {answer !== DEFAULT_ANSWER && (
+        <Typography pt={3} sx={{ fontStyle: 'italic', opacity: 0.2 }}>
+          correct: {correct} vs ticked: {answer}
+        </Typography>
+      )}
     </Box>
   );
 };

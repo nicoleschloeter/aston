@@ -1,20 +1,36 @@
-import React from 'react';
-import { Box, Button, Card, Icon, Typography } from '@mui/material';
+import React, { useEffect } from 'react';
+import { Box, Button, Card, Typography } from '@mui/material';
 import { useNavigate } from 'react-router-dom';
+import { useGameStore } from '../store/game';
+import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
+import DeleteIcon from '@mui/icons-material/Delete';
 
 const Root = () => {
+  const [updateHeader, reset] = useGameStore((state) => [
+    state.updateHeader,
+    state.reset,
+  ]);
+
   const style = {
     padding: 5,
   };
   const btn = {
+    borderRadius: '5%',
+    boxShadow: '5px 5px 10px 0px #000000',
+    marginTop: 1,
     minWidth: '200px',
+    svg: { fontSize: '8em' },
   };
   const navigate = useNavigate();
+
+  useEffect(() => {
+    updateHeader();
+  }, []);
+
   return (
     <Box
       sx={{
-        borderTop: '1px solid white',
-        marginTop: '20px',
+        marginTop: 5,
         paddingTop: '20px',
         alignContent: 'center',
         textAlign: 'center',
@@ -30,29 +46,35 @@ const Root = () => {
         }}
       >
         <Card sx={style}>
-          <Typography>Blue Team</Typography>
-          <Icon name="home" color="white" />
+          <Typography color="primary">Blue Team</Typography>
           <Button
             sx={btn}
             variant="contained"
             onClick={() => navigate('/blue/0')}
           >
-            Play
+            <SportsEsportsIcon />
           </Button>
         </Card>
         <Card sx={style}>
-          <Typography>Red Team</Typography>
-          <Icon name="home" color="white" />
+          <Typography color="secondary">Red Team</Typography>
           <Button
             sx={btn}
             variant="contained"
             color="secondary"
             onClick={() => navigate('/red/0')}
           >
-            Play
+            <SportsEsportsIcon />
           </Button>
         </Card>
       </Box>
+      <Button
+        sx={{ marginTop: 3 }}
+        variant="contained"
+        color="warning"
+        onClick={() => reset()}
+      >
+        <DeleteIcon />
+      </Button>
     </Box>
   );
 };

@@ -7,8 +7,28 @@ import Root from './routes/root';
 import Team from './routes/team';
 import ErrorPage from './pages/error';
 import './App.css';
-import logo from './logo.svg';
-import { Typography } from '@mui/material';
+import logo from './assets/logo.svg';
+import { Box } from '@mui/material';
+import { Header } from './components/Header';
+import { ThemeProvider, createTheme } from '@mui/material';
+
+const theme = createTheme({
+  mode: 'dark',
+  palette: {
+    primary: {
+      main: '#1994e2',
+    },
+    secondary: {
+      main: '#d81e1e',
+    },
+    warning: {
+      main: '#7fb3c1',
+    },
+    text: {
+      primary: '#fff',
+    },
+  },
+});
 
 const router = createBrowserRouter([
   {
@@ -24,15 +44,15 @@ const router = createBrowserRouter([
 
 ReactDOM.createRoot(document.getElementById('root')).render(
   <React.StrictMode>
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <Typography>
-          Aston - Rio‘s <code>sensory</code> game.
-        </Typography>
-      </header>
-      <RouterProvider router={router} />
-    </div>
+    <ThemeProvider theme={theme}>
+      <Box
+        className="App"
+        sx={{ background: '#282c34', '&.game .App-logo': { display: 'none' } }}
+      >
+        <Header logo={logo} />
+        <RouterProvider router={router} />
+      </Box>
+    </ThemeProvider>
   </React.StrictMode>
 );
 
