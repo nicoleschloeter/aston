@@ -5,6 +5,8 @@ import reportWebVitals from './reportWebVitals';
 import { createBrowserRouter, RouterProvider } from 'react-router-dom';
 import Root from './routes/root';
 import Team from './routes/team';
+import End from './routes/end';
+import Reveal from './routes/reveal';
 import ErrorPage from './pages/error';
 import './App.css';
 import logo from './assets/logo.svg';
@@ -24,6 +26,9 @@ const theme = createTheme({
     warning: {
       main: '#7fb3c1',
     },
+    error: {
+      main: '#a9a9a9',
+    },
     text: {
       primary: '#fff',
     },
@@ -39,6 +44,14 @@ const router = createBrowserRouter([
   {
     path: '/:team/:questionId',
     element: <Team />,
+  },
+  {
+    path: '/:team/end',
+    element: <End />,
+  },
+  {
+    path: '/:team/reveal',
+    element: <Reveal />,
   },
 ]);
 

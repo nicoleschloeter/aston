@@ -13,8 +13,58 @@ import cressImg from '../assets/cress.jpg';
 import thymeImg from '../assets/thyme.jpg';
 import mintImg from '../assets/mint.jpg';
 import rosemaryImg from '../assets/rosemary.jpg';
+import lacesImg from '../assets/sweetlaces.jpg';
+import hariboImg from '../assets/sweetharibo.jpg';
+import heartImg from '../assets/sweetheart.jpg';
+import almondsImg from '../assets/almonds.jpg';
+import chocolateImg from '../assets/chocolate.jpg';
+import cheeseImg from '../assets/cheese.jpg';
+import wheatabixImg from '../assets/wheatabix.jpg';
+import oatsImg from '../assets/oats.jpg';
+import sausageImg from '../assets/sausage.jpg';
+import cheeriosImg from '../assets/cheerios.jpg';
 
 export const DEFAULT_ANSWER = 'not-answered';
+const cheerios = {
+    name: 'Cheerios',
+    src: cheeriosImg,
+};
+const sausage = {
+    name: 'Sausage',
+    src: sausageImg,
+};
+const almonds = {
+    name: 'Almonds',
+    src: almondsImg,
+};
+const chocolate = {
+    name: 'Chocolate',
+    src: chocolateImg,
+};
+const cheese = {
+    name: 'Cheese',
+    src: cheeseImg,
+};
+const wheatabix = {
+    name: 'Wheatabix',
+    src: wheatabixImg,
+};
+const oats = {
+    name: 'Oats',
+    src: oatsImg,
+};
+const laces = {
+    name: 'Strawberry laces',
+    src: lacesImg,
+};
+const haribo = {
+    name: 'Haribo hearts',
+    src: hariboImg,
+};
+const love = {
+    name: 'Love hearts',
+    src: heartImg,
+};
 const rosemary = {
     name: 'Rosemary',
     src: rosemaryImg,
@@ -71,7 +121,7 @@ const tomato = {
 const redQuestions = {
     0: {
         title: 'Question',
-        options: [orange, onion, lemon],
+        options: [orange, onion, lemon, cheese],
         answer: DEFAULT_ANSWER,
         correct: orange.name,
     },
@@ -87,6 +137,24 @@ const redQuestions = {
         answer: DEFAULT_ANSWER,
         correct: mint.name,
     },
+    3: {
+        title: 'Question',
+        options: [sausage, almonds, chocolate],
+        answer: DEFAULT_ANSWER,
+        correct: chocolate.name,
+    },
+    4: {
+        title: 'Question',
+        options: [laces, haribo, love],
+        answer: DEFAULT_ANSWER,
+        correct: love.name,
+    },
+    5: {
+        title: 'Question',
+        options: [oats, wheatabix, cheerios],
+        answer: DEFAULT_ANSWER,
+        correct: oats.name,
+    },
 };
 const blueQuestions = {
     0: {
@@ -95,23 +163,19 @@ const blueQuestions = {
         answer: DEFAULT_ANSWER,
         correct: lavender.name,
     },
-    1: {
-        title: 'Question',
-        options: [tomato, apple, strawberry],
-        answer: DEFAULT_ANSWER,
-        correct: tomato.name,
-    },
-    2: {
-        title: 'Question',
-        options: [mint, thyme, cress, rosemary],
-        answer: DEFAULT_ANSWER,
-        correct: mint.name,
-    },
 };
 
 // define the initial state
 const initialState = {
     currentIndex: 0,
+    lives: {
+        red: 3,
+        blue: 3,
+    },
+    done: {
+        red: '',
+        blue: '',
+    },
     red: redQuestions,
     blue: blueQuestions,
 };
@@ -129,6 +193,12 @@ export const useGameStore = create(
                     el.className = list.value;
                 }
             },
+            useLive: (team) => {
+                const current = get().lives[team] - 1;
+                set({
+                    lives: {...get().lives, [team]: current },
+                });
+            },
             getQuestions: (team, index) => {
                 const item = {...get()[team][index] };
                 if (item) {
@@ -136,18 +206,37 @@ export const useGameStore = create(
                 }
                 return {...get()[team][0] };
             },
+            setScore: (team) => {
+                console.log('setScore', team);
+                let count = 0;
+                Object.entries(get()[team]).forEach(([item]) => {
+                    if (item.answer === item.correct) {
+                        count++;
+                    }
+                });
+                const lives = get().lives[team];
+                const done = `${count} + ${lives} ♥ = ${count + lives}`;
+                set({
+                    done: {...get().done, [team]: done },
+                });
+            },
             setAnswer: (team, index, itemName) => {
-                console.log('save', itemName);
-
                 const newObject = {...get()[team] };
                 newObject[index] = {...newObject[index], answer: itemName };
-                console.log('save', newObject, team, index);
                 set({
                     [team]: newObject,
                 });
             },
             reset: () => {
                 set(initialState);
+            },
+            next: (team, page, navigate) => {
+                const list = get()[team];
+                if (list[page]) {
+                    navigate(`/${team}/${page}`);
+                } else {
+                    navigate(`/${team}/end`);
+                }
             },
         }), {
             name: 'astons-game', // name of item in the storage (must be unique)

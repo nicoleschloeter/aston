@@ -6,9 +6,10 @@ import SportsEsportsIcon from '@mui/icons-material/SportsEsports';
 import DeleteIcon from '@mui/icons-material/Delete';
 
 const Root = () => {
-  const [updateHeader, reset] = useGameStore((state) => [
+  const [updateHeader, reset, done] = useGameStore((state) => [
     state.updateHeader,
     state.reset,
+    state.done,
   ]);
 
   const style = {
@@ -21,16 +22,23 @@ const Root = () => {
     minWidth: '200px',
     svg: { fontSize: '8em' },
   };
+  const score = {
+    color: 'white',
+    fontSize: 36,
+    padding: 3.5,
+  };
   const navigate = useNavigate();
 
   useEffect(() => {
     updateHeader();
   }, []);
 
+  console.log('done', done);
+
   return (
     <Box
       sx={{
-        marginTop: 5,
+        marginTop: 1,
         paddingTop: '20px',
         alignContent: 'center',
         textAlign: 'center',
@@ -52,7 +60,11 @@ const Root = () => {
             variant="contained"
             onClick={() => navigate('/blue/0')}
           >
-            <SportsEsportsIcon />
+            {done.blue === '' ? (
+              <SportsEsportsIcon />
+            ) : (
+              <Typography sx={score}>{done.blue}</Typography>
+            )}
           </Button>
         </Card>
         <Card sx={style}>
@@ -63,12 +75,16 @@ const Root = () => {
             color="secondary"
             onClick={() => navigate('/red/0')}
           >
-            <SportsEsportsIcon />
+            {done.red === '' ? (
+              <SportsEsportsIcon />
+            ) : (
+              <Typography sx={score}>{done.red}</Typography>
+            )}
           </Button>
         </Card>
       </Box>
       <Button
-        sx={{ marginTop: 3 }}
+        sx={{ position: 'absolute', bottom: 15, left: 'auto', right: 'auto' }}
         variant="contained"
         color="warning"
         onClick={() => reset()}
