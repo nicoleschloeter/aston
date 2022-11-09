@@ -1,8 +1,9 @@
-import React from 'react';
-import { Box, Button, Typography } from '@mui/material';
-import MenuIcon from '@mui/icons-material/Menu';
+import MenuIcon from "@mui/icons-material/Menu";
+import { Box, Button, Typography } from "@mui/material";
+import React from "react";
 
 const Header = (logo) => {
+  console.log("header");
   return (
     <Box component="header" className="header" pb={2}>
       <img src={logo.logo} className="App-logo" alt="logo" />
@@ -12,8 +13,8 @@ const Header = (logo) => {
       <Button
         variant="contained"
         color="warning"
-        onClick={() => (window.location = '/')}
-        sx={{ position: 'absolute', left: 25, top: 25 }}
+        onClick={() => (window.location = "/")}
+        sx={{ position: "absolute", left: 25, top: 25 }}
       >
         <MenuIcon />
       </Button>

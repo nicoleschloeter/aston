@@ -1,66 +1,65 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import './index.css';
-import reportWebVitals from './reportWebVitals';
-import { createBrowserRouter, RouterProvider } from 'react-router-dom';
-import Root from './routes/root';
-import Team from './routes/team';
-import End from './routes/end';
-import Reveal from './routes/reveal';
-import ErrorPage from './pages/error';
-import './App.css';
-import logo from './assets/logo.svg';
-import { Box } from '@mui/material';
-import { Header } from './components/Header';
-import { ThemeProvider, createTheme } from '@mui/material';
+import { Box, createTheme, ThemeProvider } from "@mui/material";
+import React from "react";
+import ReactDOM from "react-dom/client";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import "./App.css";
+import logo from "./assets/logo.svg";
+import { Header } from "./components/Header";
+import "./index.css";
+import ErrorPage from "./pages/error";
+import reportWebVitals from "./reportWebVitals";
+import End from "./routes/end";
+import Reveal from "./routes/reveal";
+import Root from "./routes/root";
+import Team from "./routes/team";
 
 const theme = createTheme({
-  mode: 'dark',
+  mode: "dark",
   palette: {
     primary: {
-      main: '#1994e2',
+      main: "#1994e2",
     },
     secondary: {
-      main: '#d81e1e',
+      main: "#d81e1e",
     },
     warning: {
-      main: '#7fb3c1',
+      main: "#7fb3c1",
     },
     error: {
-      main: '#a9a9a9',
+      main: "#a9a9a9",
     },
     text: {
-      primary: '#fff',
+      primary: "#fff",
     },
   },
 });
 
 const router = createBrowserRouter([
   {
-    path: '/',
+    path: "/",
     element: <Root />,
     errorElement: <ErrorPage />,
   },
   {
-    path: '/:team/:questionId',
+    path: "/:team/:questionId",
     element: <Team />,
   },
   {
-    path: '/:team/end',
+    path: "/:team/end",
     element: <End />,
   },
   {
-    path: '/:team/reveal',
+    path: "/:team/reveal",
     element: <Reveal />,
   },
 ]);
 
-ReactDOM.createRoot(document.getElementById('root')).render(
+ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <ThemeProvider theme={theme}>
       <Box
         className="App"
-        sx={{ background: '#282c34', '&.game .App-logo': { display: 'none' } }}
+        sx={{ background: "#282c34", "&.game .App-logo": { display: "none" } }}
       >
         <Header logo={logo} />
         <RouterProvider router={router} />

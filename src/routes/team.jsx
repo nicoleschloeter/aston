@@ -1,15 +1,15 @@
-import React, { useEffect } from 'react';
 import {
   Box,
   Button,
-  RadioGroup,
-  Typography,
   FormControlLabel,
   Radio,
-} from '@mui/material';
-import { useNavigate, useParams } from 'react-router-dom';
-import { useGameStore, DEFAULT_ANSWER } from '../store/game';
-import { Lifeline } from '../components/Lifeline';
+  RadioGroup,
+  Typography,
+} from "@mui/material";
+import React, { useEffect } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { Lifeline } from "../components/Lifeline";
+import { DEFAULT_ANSWER, useGameStore } from "../store/game";
 
 const Team = () => {
   const navigate = useNavigate();
@@ -28,8 +28,8 @@ const Team = () => {
   const game = getQuestions(team, questionId);
   const { title, options, correct, answer } = game;
   const nextPage = id + 1;
-  const isBlueTeam = team === 'blue';
-  const color = isBlueTeam ? 'primary' : 'secondary';
+  const isBlueTeam = team === "blue";
+  const color = isBlueTeam ? "primary" : "secondary";
 
   useEffect(() => {
     updateHeader();
@@ -38,8 +38,8 @@ const Team = () => {
   return (
     <Box
       sx={{
-        alignContent: 'center',
-        textAlign: 'center',
+        alignContent: "center",
+        textAlign: "center",
       }}
     >
       <Lifeline color={color} team={team} />
@@ -48,15 +48,15 @@ const Team = () => {
       </Typography>
       <RadioGroup
         sx={{
-          margin: '0 auto',
-          display: 'grid',
+          margin: "0 auto",
+          display: "grid",
           padding: 2,
           gridTemplateColumns: `repeat(${options.length}, min-content)`,
-          gap: '20px',
-          justifyContent: 'center',
+          gap: "20px",
+          justifyContent: "center",
           img: {
             maxWidth: 120,
-            height: 'auto',
+            height: "auto",
           },
         }}
         value={answer}
@@ -75,22 +75,31 @@ const Team = () => {
                 {item.src && <img src={item.src} alt="pic" />}
                 <Typography
                   variant="h6"
-                  color={isBlueTeam ? 'primary.main' : 'secondary.main'}
+                  color={isBlueTeam ? "primary.main" : "secondary.main"}
                 >
                   {item.name}
                 </Typography>
               </Box>
             }
             sx={{
-              svg: { color: isBlueTeam ? 'primary.main' : 'secondary.main' },
-              padding: '20px 60px 20px 30px',
-              background: 'white',
+              svg: { color: isBlueTeam ? "primary.main" : "secondary.main" },
+              padding: "20px 60px 20px 30px",
+              background: "white",
               maxWidth: 200,
               minHeight: 120,
             }}
           />
         ))}
       </RadioGroup>
+      <Button
+        variant="contained"
+        color="error"
+        disabled={id === 0}
+        sx={{ marginTop: 10, marginRight: 20, minWidth: 200, fontSize: 20 }}
+        onClick={() => navigate(`/${team}/${id - 1}`)}
+      >
+        Prev
+      </Button>
       <Button
         variant="contained"
         disabled={answer === DEFAULT_ANSWER}
@@ -101,7 +110,7 @@ const Team = () => {
         Next
       </Button>
       {answer !== DEFAULT_ANSWER && (
-        <Typography pt={3} sx={{ fontStyle: 'italic', opacity: 0.2 }}>
+        <Typography pt={3} sx={{ fontStyle: "italic", opacity: 0.2 }}>
           correct: {correct} vs ticked: {answer}
         </Typography>
       )}
