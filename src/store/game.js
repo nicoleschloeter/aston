@@ -163,6 +163,24 @@ const blueQuestions = {
     answer: DEFAULT_ANSWER,
     correct: lavender.name,
   },
+  1: {
+    title: "Question",
+    options: [sausage, almonds, chocolate],
+    answer: DEFAULT_ANSWER,
+    correct: chocolate.name,
+  },
+  2: {
+    title: "Question",
+    options: [laces, haribo, love],
+    answer: DEFAULT_ANSWER,
+    correct: love.name,
+  },
+  3: {
+    title: "Question",
+    options: [oats, wheatabix, cheerios],
+    answer: DEFAULT_ANSWER,
+    correct: oats.name,
+  },
 };
 
 // define the initial state
@@ -175,6 +193,14 @@ const initialState = {
   done: {
     red: "",
     blue: "",
+  },
+  extra: {
+    red: 0,
+    blue: 0,
+  },
+  total: {
+    red: 0,
+    blue: 0,
   },
   red: redQuestions,
   blue: blueQuestions,
@@ -199,6 +225,21 @@ export const useGameStore = create(
           lives: { ...get().lives, [team]: current },
         });
       },
+      addExtra: (team, minus) => {
+        const add = get().extra[team];
+        const total = get().total[team];
+        if (minus) {
+          set({
+            extra: { ...get().extra, [team]: add - 1 },
+            total: { ...get().total, [team]: total - 1 },
+          });
+        } else {
+          set({
+            extra: { ...get().extra, [team]: add + 1 },
+            total: { ...get().total, [team]: total + 1 },
+          });
+        }
+      },
       getQuestions: (team, index) => {
         const item = { ...get()[team][index] };
         if (item) {
@@ -209,12 +250,16 @@ export const useGameStore = create(
       getNextQuestion: (team) => {
         const questions = get()[team];
         let count = 0;
+        let total = 0;
         Object.entries(questions).forEach(([item]) => {
-          console.log(questions[item]);
+          total++;
           if (questions[item].answer !== DEFAULT_ANSWER) {
             count++;
           }
         });
+        if (count === total) {
+          return `/${team}/end`;
+        }
         if (!questions[count]) {
           count = 0;
         }
@@ -232,6 +277,7 @@ export const useGameStore = create(
         const done = `${count} + ${lives} ♥ = ${count + lives}`;
         set({
           done: { ...get().done, [team]: done },
+          total: { ...get().total, [team]: count + lives },
         });
       },
       setAnswer: (team, index, itemName) => {

@@ -7,7 +7,7 @@ const Header = (logo) => {
   return (
     <Box component="header" className="header" pb={2}>
       <img src={logo.logo} className="App-logo" alt="logo" />
-      <Typography sx={{ paddingTop: 3, fontSize: 30 }}>
+      <Typography sx={{ paddingTop: 0, fontSize: 50 }}>
         Aston-Rio’s 8th birthday party.
       </Typography>
       <Button

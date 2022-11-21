@@ -9,6 +9,7 @@ import "./index.css";
 import ErrorPage from "./pages/error";
 import reportWebVitals from "./reportWebVitals";
 import End from "./routes/end";
+import Over from "./routes/over";
 import Reveal from "./routes/reveal";
 import Root from "./routes/root";
 import Team from "./routes/team";
@@ -51,6 +52,10 @@ const router = createBrowserRouter([
   {
     path: "/:team/reveal",
     element: <Reveal />,
+  },
+  {
+    path: "/over",
+    element: <Over />,
   },
 ]);
 
