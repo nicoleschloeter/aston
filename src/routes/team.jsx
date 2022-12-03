@@ -44,7 +44,7 @@ const Team = () => {
     >
       <Lifeline color={color} team={team} />
       <Typography variant="h3" py={2} mb={2}>
-        {title} {nextPage}
+        {title}
       </Typography>
       <RadioGroup
         sx={{
@@ -109,11 +109,12 @@ const Team = () => {
       >
         Next
       </Button>
-      {answer !== DEFAULT_ANSWER && (
-        <Typography pt={3} sx={{ fontStyle: "italic", opacity: 0.2 }}>
-          correct: {correct} vs ticked: {answer}
-        </Typography>
-      )}
+      {/* // */}
+      <Typography pt={3} sx={{ fontStyle: "italic", opacity: 0.1 }}>
+        {"{"}
+        {correct}
+        {"}"}
+      </Typography>
     </Box>
   );
 };

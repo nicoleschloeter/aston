@@ -2,10 +2,12 @@ import create from "zustand";
 import { persist } from "zustand/middleware";
 import almondsImg from "../assets/almonds.jpg";
 import appleImg from "../assets/apple.jpg";
+import basilImg from "../assets/basil.jpg";
 import cheeriosImg from "../assets/cheerios.jpg";
 import cheeseImg from "../assets/cheese.jpg";
 import chocolateImg from "../assets/chocolate.jpg";
 import cressImg from "../assets/cress.jpg";
+import crunchynutImg from "../assets/crunchynut.png";
 import lavenderImg from "../assets/lavender.jpg";
 import leavesImg from "../assets/leaves.jpg";
 import lemonImg from "../assets/lemon.jpg";
@@ -13,18 +15,51 @@ import mintImg from "../assets/mint.jpg";
 import oatsImg from "../assets/oats.jpg";
 import onionImg from "../assets/onion.jpg";
 import orangeImg from "../assets/orange.jpg";
+import parselyImg from "../assets/parsely.jpeg";
 import pearImg from "../assets/pear.jpg";
 import rosemaryImg from "../assets/rosemary.jpg";
 import sausageImg from "../assets/sausage.jpg";
+import seedsPumkinImg from "../assets/seeds-pumpkin.jpg";
+import seedsRiceImg from "../assets/seeds-rice.png";
+import seedsSunImg from "../assets/seeds-sunflower.jpg";
 import strawberryImg from "../assets/strawberry.jpg";
 import hariboImg from "../assets/sweetharibo.jpg";
 import heartImg from "../assets/sweetheart.jpg";
 import lacesImg from "../assets/sweetlaces.jpg";
 import thymeImg from "../assets/thyme.jpg";
 import tomatoImg from "../assets/tomato.jpg";
+import vinegarImg from "../assets/vinegar.png";
 import wheatabixImg from "../assets/wheatabix.jpg";
 
 export const DEFAULT_ANSWER = "not-answered";
+const crunchynut = {
+  name: "Crunchy Nut",
+  src: crunchynutImg,
+};
+const vinegar = {
+  name: "Vinegar",
+  src: vinegarImg,
+};
+const basil = {
+  name: "Basil",
+  src: basilImg,
+};
+const parsely = {
+  name: "parsely",
+  src: parselyImg,
+};
+const rice = {
+  name: "Rice",
+  src: seedsRiceImg,
+};
+const sunflower = {
+  name: "Sunflower",
+  src: seedsSunImg,
+};
+const pumkin = {
+  name: "Pumkin",
+  src: seedsPumkinImg,
+};
 const cheerios = {
   name: "Cheerios",
   src: cheeriosImg,
@@ -117,69 +152,166 @@ const tomato = {
   name: "Tomato",
   src: tomatoImg,
 };
+/*
+[orange, onion, lemon, cheese]
+[vinegar, onion, lemon]
+[tomato, strawberry, apple]
+[cheese, lemon, orange, onion]
+[rosemary, mint, thyme, cress]
+[sausage, almonds, chocolate]
+[laces, haribo, love]
+[oats, wheatabix, cheerios]
+[rosemary, basil, parsely, cress]
+[rice, sunflower, pumkin]
+[pear, lavender, leaves]
+*/
 
 const redQuestions = {
   0: {
-    title: "Question",
-    options: [orange, onion, lemon, cheese],
-    answer: DEFAULT_ANSWER,
-    correct: orange.name,
-  },
-  1: {
-    title: "Question",
-    options: [tomato, strawberry, apple],
-    answer: DEFAULT_ANSWER,
-    correct: apple.name,
-  },
-  2: {
-    title: "Question",
-    options: [rosemary, mint, thyme, cress],
-    answer: DEFAULT_ANSWER,
-    correct: mint.name,
-  },
-  3: {
-    title: "Question",
+    title: "Smell 1",
     options: [sausage, almonds, chocolate],
     answer: DEFAULT_ANSWER,
     correct: chocolate.name,
   },
-  4: {
-    title: "Question",
-    options: [laces, haribo, love],
+  1: {
+    title: "Smell 2",
+    options: [onion, vinegar, lemon],
     answer: DEFAULT_ANSWER,
-    correct: love.name,
+    correct: vinegar.name,
+  },
+  2: {
+    title: "Smell 3",
+    options: [strawberry, apple, tomato, haribo],
+    answer: DEFAULT_ANSWER,
+    correct: tomato.name,
+  },
+  3: {
+    title: "Smell 4",
+    options: [cheese, lemon, orange, onion],
+    answer: DEFAULT_ANSWER,
+    correct: onion.name,
+  },
+  4: {
+    title: "Taste 1",
+    options: [rosemary, thyme, mint, cress],
+    answer: DEFAULT_ANSWER,
+    correct: thyme.name,
   },
   5: {
-    title: "Question",
-    options: [oats, wheatabix, cheerios],
+    title: "Taste 2",
+    options: [cheese, orange, lemon, onion],
+    answer: DEFAULT_ANSWER,
+    correct: orange.name,
+  },
+  6: {
+    title: "Taste 3",
+    options: [haribo, love, laces],
+    answer: DEFAULT_ANSWER,
+    correct: haribo.name,
+  },
+  7: {
+    title: "Taste 4",
+    options: [crunchynut, wheatabix, oats, cheerios],
     answer: DEFAULT_ANSWER,
     correct: oats.name,
+  },
+  8: {
+    title: "Touch 1",
+    options: [rosemary, basil, parsely, cress],
+    answer: DEFAULT_ANSWER,
+    correct: parsely.name,
+  },
+  9: {
+    title: "Touch 2",
+    options: [rice, sunflower, pumkin],
+    answer: DEFAULT_ANSWER,
+    correct: rice.name,
+  },
+  10: {
+    title: "Touch 3",
+    options: [almonds, pumkin, sunflower],
+    answer: DEFAULT_ANSWER,
+    correct: sunflower.name,
+  },
+  11: {
+    title: "Touch 4",
+    options: [orange, onion, lemon, cheese],
+    answer: DEFAULT_ANSWER,
+    correct: cheese.name,
   },
 };
 const blueQuestions = {
   0: {
-    title: "Question",
-    options: [pear, lavender, leaves],
+    title: "Smell 1",
+    options: [orange, onion, lemon, cheese],
     answer: DEFAULT_ANSWER,
-    correct: lavender.name,
+    correct: lemon.name,
   },
   1: {
-    title: "Question",
+    title: "Smell 2",
+    options: [cheese, onion, lemon, orange],
+    answer: DEFAULT_ANSWER,
+    correct: onion.name,
+  },
+  2: {
+    title: "Smell 3",
+    options: [onion, vinegar, lemon],
+    answer: DEFAULT_ANSWER,
+    correct: vinegar.name,
+  },
+  3: {
+    title: "Smell 4",
+    options: [tomato, apple, strawberry],
+    answer: DEFAULT_ANSWER,
+    correct: apple.name,
+  },
+  4: {
+    title: "Taste 1",
+    options: [oats, wheatabix, cheerios],
+    answer: DEFAULT_ANSWER,
+    correct: oats.name,
+  },
+  5: {
+    title: "Taste 2",
+    options: [orange, onion, lemon, cheese],
+    answer: DEFAULT_ANSWER,
+    correct: cheese.name,
+  },
+  6: {
+    title: "Taste 3",
+    options: [rosemary, mint, thyme, cress],
+    answer: DEFAULT_ANSWER,
+    correct: mint.name,
+  },
+  7: {
+    title: "Taste 4",
     options: [sausage, almonds, chocolate],
     answer: DEFAULT_ANSWER,
     correct: chocolate.name,
   },
-  2: {
-    title: "Question",
-    options: [laces, haribo, love],
+  8: {
+    title: "Touch 1",
+    options: [pear, lavender, leaves],
     answer: DEFAULT_ANSWER,
-    correct: love.name,
+    correct: lavender.name,
   },
-  3: {
-    title: "Question",
-    options: [oats, wheatabix, cheerios],
+  9: {
+    title: "Touch 2",
+    options: [rice, pumkin, sunflower],
     answer: DEFAULT_ANSWER,
-    correct: oats.name,
+    correct: pumkin.name,
+  },
+  10: {
+    title: "Touch 3",
+    options: [basil, rosemary, parsely, cress],
+    answer: DEFAULT_ANSWER,
+    correct: basil.name,
+  },
+  11: {
+    title: "Touch 4",
+    options: [crunchynut, wheatabix, oats, cheerios],
+    answer: DEFAULT_ANSWER,
+    correct: crunchynut.name,
   },
 };
 

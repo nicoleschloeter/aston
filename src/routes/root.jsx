@@ -50,7 +50,7 @@ const Root = () => {
           display: "grid",
           gridTemplateColumns: "1fr 1fr",
           gap: "20px",
-          maxWidth: "80vw",
+          maxWidth: "95vw",
           margin: "0 auto",
         }}
       >
@@ -62,7 +62,7 @@ const Root = () => {
         </Typography>
         <Card sx={style}>
           <Typography sx={{ fontSize: 26 }} color="primary">
-            Smell & Taste
+            Smell - Taste - Touch
           </Typography>
           <Button
             sx={btn}
@@ -76,7 +76,7 @@ const Root = () => {
         </Card>
         <Card sx={style}>
           <Typography sx={{ fontSize: 26 }} color="secondary">
-            Smell & Taste
+            Smell - Taste - Touch
           </Typography>
           <Button
             sx={btn}
@@ -100,7 +100,7 @@ const Root = () => {
             sx={{ fontSize: 26 }}
             color={done.blue === "" ? "error" : "primary"}
           >
-            Touch & Act
+            Find & Act
           </Typography>
           <Typography
             sx={{ fontSize: 40, marginTop: -1 }}
@@ -143,7 +143,7 @@ const Root = () => {
             sx={{ fontSize: 26 }}
             color={done.red === "" ? "error" : "secondary"}
           >
-            Touch & Act
+            Find & Act
           </Typography>
           <Typography
             sx={{ fontSize: 40, marginTop: -1 }}
