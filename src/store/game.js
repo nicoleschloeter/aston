@@ -235,9 +235,9 @@ const redQuestions = {
   },
   11: {
     title: "Touch 4",
-    options: [orange, onion, lemon, cheese],
+    options: [tomato, strawberry, apple, sausage],
     answer: DEFAULT_ANSWER,
-    correct: cheese.name,
+    correct: strawberry.name,
   },
 };
 const blueQuestions = {
