@@ -109,12 +109,6 @@ const Team = () => {
       >
         Next
       </Button>
-      {/* // */}
-      <Typography pt={3} sx={{ fontStyle: "italic", opacity: 0.1 }}>
-        {"{"}
-        {correct}
-        {"}"}
-      </Typography>
     </Box>
   );
 };
