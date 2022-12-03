@@ -26,7 +26,7 @@ const Team = () => {
   );
 
   const game = getQuestions(team, questionId);
-  const { title, options, correct, answer } = game;
+  const { title, options, answer } = game;
   const nextPage = id + 1;
   const isBlueTeam = team === "blue";
   const color = isBlueTeam ? "primary" : "secondary";

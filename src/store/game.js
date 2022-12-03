@@ -334,6 +334,10 @@ const initialState = {
     red: 0,
     blue: 0,
   },
+  sensory: {
+    red: [false, false, false],
+    blue: [false, false, false],
+  },
   red: redQuestions,
   blue: blueQuestions,
 };
@@ -392,6 +396,7 @@ export const useGameStore = create(
         if (count === total) {
           return `/${team}/end`;
         }
+
         if (!questions[count]) {
           count = 0;
         }
@@ -424,7 +429,17 @@ export const useGameStore = create(
       },
       next: (team, page, navigate) => {
         const list = get()[team];
-        if (list[page]) {
+        if (page % 4 === 0) {
+          const arr = [...get().sensory[team]];
+          arr[page / 4 - 1] = true;
+          console.log("senory", team, arr);
+          const both = { ...get().sensory, [team]: arr };
+          set({
+            sensory: both,
+          });
+          console.log("go home!?", both);
+          navigate("/");
+        } else if (list[page]) {
           navigate(`/${team}/${page}`);
         } else {
           navigate(`/${team}/end`);

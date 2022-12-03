@@ -10,12 +10,13 @@ import { useNavigate } from "react-router-dom";
 import { useGameStore } from "../store/game";
 
 const Root = () => {
-  const [updateHeader, reset, done, extra, getNextQuestion, addExtra] =
+  const [updateHeader, reset, done, extra, sensory, getNextQuestion, addExtra] =
     useGameStore((state) => [
       state.updateHeader,
       state.reset,
       state.done,
       state.extra,
+      state.sensory,
       state.getNextQuestion,
       state.addExtra,
     ]);
@@ -23,6 +24,7 @@ const Root = () => {
   const style = {
     padding: 5,
   };
+  const label = ["Smell", "Taste", "Touch"];
   const btn = {
     borderRadius: "5%",
     boxShadow: "5px 5px 10px 0px #000000",
@@ -61,9 +63,24 @@ const Root = () => {
           Red Team
         </Typography>
         <Card sx={style}>
-          <Typography sx={{ fontSize: 26 }} color="primary">
-            Smell - Taste - Touch
-          </Typography>
+          <div>
+            {sensory.blue.map((isDone, index) => (
+              <Typography
+                component="span"
+                color="primary"
+                key={`red-label-${index}`}
+                sx={{
+                  fontSize: 26,
+                  ".label": { textDecoration: isDone ? "line-through" : "" },
+                }}
+              >
+                <>
+                  <span className="label">{label[index]}</span>
+                  <span>{index === 2 ? "" : " - "}</span>
+                </>
+              </Typography>
+            ))}
+          </div>
           <Button
             sx={btn}
             variant="contained"
@@ -75,9 +92,22 @@ const Root = () => {
           </Button>
         </Card>
         <Card sx={style}>
-          <Typography sx={{ fontSize: 26 }} color="secondary">
-            Smell - Taste - Touch
-          </Typography>
+          <div>
+            {sensory.red.map((isDone, index) => (
+              <Typography
+                component="span"
+                color="secondary"
+                key={`blue-label-${index}`}
+                sx={{
+                  fontSize: 26,
+                  ".label": { textDecoration: isDone ? "line-through" : "" },
+                }}
+              >
+                <span className="label">{label[index]}</span>
+                <span>{index === 2 ? "" : " - "}</span>
+              </Typography>
+            ))}
+          </div>
           <Button
             sx={btn}
             variant="contained"
